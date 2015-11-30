@@ -92,6 +92,5 @@ RxSnappy is opensource, contribution and feedback are welcomed
 
 [richardradics](https://github.com/richardradics)   
 
-![alt text][logo]
+[![Supercharge](http://s23.postimg.org/gbpv7dwjr/unnamed.png)](http://supercharge.io/)
 
-[logo]: http://s23.postimg.org/gbpv7dwjr/unnamed.png "Supercharge"
