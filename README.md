@@ -11,7 +11,7 @@ This library offers a time based raw response cache solution on client side.
 * __Get artifact__
 
 ```gradle
-	compile 'io.supercharge:rxsnappy:0.0.1'
+compile 'io.supercharge:rxsnappy:0.0.1'
 ```
 
 
