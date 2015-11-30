@@ -49,3 +49,5 @@ dependencies {
     androidTestCompile 'com.squareup.retrofit:retrofit:1.9.0'
     androidTestCompile 'com.squareup.okhttp:okhttp:2.6.0'
 }
+
+apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
