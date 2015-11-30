@@ -33,7 +33,7 @@ public abstract class BaseSnappyClient {
 
     private boolean checkIsCacheValid(String key, Long cacheTime) {
         if (cacheTime == null) {
-            return Boolean.TRUE;
+            return true;
         } else {
 
             String[] splitted = key.split(":");
@@ -42,7 +42,7 @@ public abstract class BaseSnappyClient {
             long diff = current.getTime() - cacheDate.getTime();
 
             if (diff <= cacheTime) {
-                return Boolean.TRUE;
+                return true;
             } else {
                 throw new CacheExpiredException();
             }
@@ -91,12 +91,12 @@ public abstract class BaseSnappyClient {
 
             if (keys.length > 0) {
                 if (checkIsCacheValid(keys[0], cacheTime)) {
-                    return Boolean.TRUE;
+                    return true;
                 } else {
-                    return Boolean.FALSE;
+                    return false;
                 }
             } else {
-                return Boolean.FALSE;
+                return false;
             }
         }
     }
