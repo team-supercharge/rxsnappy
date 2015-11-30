@@ -20,7 +20,7 @@ import io.supercharge.rxsnappy.exception.ValueIsNullException;
 public abstract class BaseSnappyClient {
 
 
-    protected static DB db;
+    protected DB db;
 
 
     public BaseSnappyClient(DB db) {
