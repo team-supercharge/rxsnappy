@@ -41,7 +41,7 @@ final String key = RxSnappyUtils.generateKey("fooresponse", token, barRequest);
 
 //Look for in cache with a time interval (ms)
 //If the data in cache is older than 15 sec it throws an exception
-rxSnappyClient.getObject(key, 15000L, FooResponse.class)
+return rxSnappyClient.getObject(key, 15000L, FooResponse.class)
 	.onErrorResumeNext(retrofitApi.getFooResponse(token, barRequest)
 		.flatMap(fooResponse -> rxSnappyClient.setObject(key, fooResponse));
 }
@@ -49,7 +49,7 @@ rxSnappyClient.getObject(key, 15000L, FooResponse.class)
 ```
 
 * [See tests for examples
-](../src/androidTest/java/io/supercharge/rxsnappy/WorkingWithRetrofitTest.java)
+](../rxsnappy/src/androidTest/java/io/supercharge/rxsnappy/WorkingWithRetrofitTest.java)
 
 
 ## Contributing
