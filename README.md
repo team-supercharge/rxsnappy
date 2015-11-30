@@ -11,7 +11,7 @@ This library offers a time based raw response cache solution on client side.
 * __Get artifact__
 
 ```gradle
-compile 'io.supercharge:rxsnappy:0.0.1'
+compile 'io.supercharge:rxsnappy:0.1.0'
 ```
 
 
@@ -36,7 +36,7 @@ RxSnappyClient rxSnappyClient = new RxSnappyClient();
 
 rxSnappyClient.setObject(key, object).subscribe(object -> ...);
 
-rxSnappyClient.getObject(key, object, Object.class).subscribe(object -> ...);
+rxSnappyClient.getObject(key, Object.class).subscribe(object -> ...);
 
 ```
 * __Every record automatically gets an id which id is the date in milliseconds of the insertion__
