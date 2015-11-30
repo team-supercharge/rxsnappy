@@ -57,8 +57,6 @@ return rxSnappyClient.getObject(key, 15000L, FooResponse.class)
 Please fork this repository and create a pull request
 Any contributions, large or small, major features, bug fixes, unit tests are welcomed and appreciated but will be thoroughly reviewed and discussed.
 
-You can run the test suite by following the instructions on the [Running the Test Suite](https://github.com/pardom/ActiveAndroid/wiki/Running-the-Test-Suite) Wiki page.
-
 License
 --------
 RxSnappy is opensource, contribution and feedback are welcomed
