@@ -5,7 +5,7 @@ package io.supercharge.rxsnappy;
  */
 public final class RxSnappyLog {
 
-    static boolean debug = true;
+    static boolean debug = false;
     private static final String TAG = "RxSnappy";
 
     private RxSnappyLog() {
