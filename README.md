@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/team-supercharge/rxsnappy.svg?branch=master)](https://travis-ci.org/team-supercharge/rxsnappy)
+
 #RxSnappy
 
 RxSnappy is a thread safe rxjava wrapper for the great [SnappyDB](http://www.snappydb.com/) fast key-value database for Android.
