@@ -32,7 +32,6 @@ public final class RxSnappyClient extends BaseSnappyClient {
                     subscriber.onNext(getBooleanValue(key, cacheTime));
                     subscriber.onCompleted();
                 } catch (Exception e) {
-                    RxSnappyLog.e("Failed to get boolean value!", e);
                     subscriber.onError(e);
                 }
             }
@@ -48,7 +47,6 @@ public final class RxSnappyClient extends BaseSnappyClient {
                     subscriber.onNext(value);
                     subscriber.onCompleted();
                 } catch (Exception e) {
-                    RxSnappyLog.e("Failed to set boolean value!", e);
                     subscriber.onError(e);
                 }
             }
@@ -67,7 +65,6 @@ public final class RxSnappyClient extends BaseSnappyClient {
                     subscriber.onNext(getStringValue(key, cacheTime));
                     subscriber.onCompleted();
                 } catch (Exception e) {
-                    RxSnappyLog.e("Failed to get string value!", e);
                     subscriber.onError(e);
                 }
             }
@@ -83,7 +80,6 @@ public final class RxSnappyClient extends BaseSnappyClient {
                     subscriber.onNext(value);
                     subscriber.onCompleted();
                 } catch (Exception e) {
-                    RxSnappyLog.e("Failed to set string value!", e);
                     subscriber.onError(e);
                 }
             }
@@ -99,7 +95,6 @@ public final class RxSnappyClient extends BaseSnappyClient {
                     subscriber.onNext(value);
                     subscriber.onCompleted();
                 } catch (Exception e) {
-                    RxSnappyLog.e("Failed to set long value!", e);
                     subscriber.onError(e);
                 }
             }
@@ -118,7 +113,6 @@ public final class RxSnappyClient extends BaseSnappyClient {
                     subscriber.onNext(getLongValue(key, cacheTime));
                     subscriber.onCompleted();
                 } catch (Exception e) {
-                    RxSnappyLog.e("Failed to get long value!", e);
                     subscriber.onError(e);
                 }
             }
@@ -135,7 +129,6 @@ public final class RxSnappyClient extends BaseSnappyClient {
                     subscriber.onNext(value);
                     subscriber.onCompleted();
                 } catch (Exception e) {
-                    RxSnappyLog.e("Failed to set integer value!", e);
                     subscriber.onError(e);
                 }
             }
@@ -154,7 +147,6 @@ public final class RxSnappyClient extends BaseSnappyClient {
                     subscriber.onNext(getIntegerValue(key, cacheTime));
                     subscriber.onCompleted();
                 } catch (Exception e) {
-                    RxSnappyLog.e("Failed to get integer value!", e);
                     subscriber.onError(e);
                 }
             }
@@ -171,7 +163,6 @@ public final class RxSnappyClient extends BaseSnappyClient {
                     subscriber.onNext(value);
                     subscriber.onCompleted();
                 } catch (Exception e) {
-                    RxSnappyLog.e("Failed to set string list!", e);
                     subscriber.onError(e);
                 }
             }
@@ -191,7 +182,6 @@ public final class RxSnappyClient extends BaseSnappyClient {
                     subscriber.onNext(getStringListValue(key, cacheTime));
                     subscriber.onCompleted();
                 } catch (Exception e) {
-                    RxSnappyLog.e("Failed to get string list!", e);
                     subscriber.onError(e);
                 }
             }
@@ -207,7 +197,6 @@ public final class RxSnappyClient extends BaseSnappyClient {
                     subscriber.onNext(value);
                     subscriber.onCompleted();
                 } catch (Exception e) {
-                    RxSnappyLog.e("Failed to set string list!", e);
                     subscriber.onError(e);
                 }
             }
@@ -226,7 +215,6 @@ public final class RxSnappyClient extends BaseSnappyClient {
                     subscriber.onNext(getObjectList(key, cacheTime, selectedClass));
                     subscriber.onCompleted();
                 } catch (Exception e) {
-                    RxSnappyLog.e("Failed to get string list!", e);
                     subscriber.onError(e);
                 }
             }
@@ -243,7 +231,6 @@ public final class RxSnappyClient extends BaseSnappyClient {
                     subscriber.onNext(value);
                     subscriber.onCompleted();
                 } catch (Exception e) {
-                    RxSnappyLog.e("Failed to set object", e);
                     subscriber.onError(e);
                 }
             }
@@ -262,7 +249,6 @@ public final class RxSnappyClient extends BaseSnappyClient {
                     subscriber.onNext(getObjectValue(key, cacheTime, selectedClass));
                     subscriber.onCompleted();
                 } catch (Exception e) {
-                    RxSnappyLog.e("Failed to get object !", e);
                     subscriber.onError(e);
                 }
             }

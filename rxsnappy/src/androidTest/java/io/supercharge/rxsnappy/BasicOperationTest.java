@@ -427,7 +427,7 @@ public class BasicOperationTest extends AndroidTestCase {
         super.tearDown();
 
         RxSnappy.closeDatabase();
-        RxSnappy.clearDatabase();
+        RxSnappy.destroyDatabase();
 
 
     }

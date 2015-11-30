@@ -127,6 +127,6 @@ public class WorkingWithRetrofitTest extends AndroidTestCase {
         super.tearDown();
         mockWebServer.shutdown();
         RxSnappy.closeDatabase();
-        RxSnappy.clearDatabase();
+        RxSnappy.destroyDatabase();
     }
 }

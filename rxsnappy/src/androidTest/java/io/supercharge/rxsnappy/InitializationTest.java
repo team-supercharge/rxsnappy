@@ -20,7 +20,7 @@ public class InitializationTest extends AndroidTestCase {
         assertNotNull(RxSnappy.db);
 
         RxSnappy.closeDatabase();
-        RxSnappy.clearDatabase();
+        RxSnappy.destroyDatabase();
 
         assertNull(RxSnappy.db);
 

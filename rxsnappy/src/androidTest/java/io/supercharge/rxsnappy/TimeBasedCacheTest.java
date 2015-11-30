@@ -124,6 +124,6 @@ public class TimeBasedCacheTest extends AndroidTestCase {
     protected void tearDown() throws Exception {
         super.tearDown();
         RxSnappy.closeDatabase();
-        RxSnappy.clearDatabase();
+        RxSnappy.destroyDatabase();
     }
 }

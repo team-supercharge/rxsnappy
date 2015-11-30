@@ -42,7 +42,7 @@ public final class RxSnappy {
         }
     }
 
-    public static void clearDatabase() {
+    public static void destroyDatabase() {
         if (db != null) {
             try {
                 db.destroy();
