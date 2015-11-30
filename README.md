@@ -49,7 +49,7 @@ return rxSnappyClient.getObject(key, 15000L, FooResponse.class)
 ```
 
 * [See tests for examples
-](../rxsnappy/src/androidTest/java/io/supercharge/rxsnappy/WorkingWithRetrofitTest.java)
+](./rxsnappy/src/androidTest/java/io/supercharge/rxsnappy/WorkingWithRetrofitTest.java)
 
 
 ## Contributing
