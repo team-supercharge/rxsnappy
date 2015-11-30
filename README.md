@@ -57,6 +57,8 @@ return rxSnappyClient.getObject(key, 15000L, FooResponse.class)
 Please fork this repository and create a pull request
 Any contributions, large or small, major features, bug fixes, unit tests are welcomed and appreciated but will be thoroughly reviewed and discussed.
 
+Run the instumentation tests!
+
 License
 --------
 RxSnappy is opensource, contribution and feedback are welcomed
