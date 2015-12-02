@@ -5,7 +5,7 @@ import com.snappydb.DB;
 import java.util.List;
 
 import rx.Observable;
-import rx.Subscriber;
+import rx.functions.Func0;
 
 /**
  * Created by richardradics on 24/11/15.
@@ -25,29 +25,29 @@ public final class RxSnappyClient extends BaseSnappyClient {
     }
 
     public Observable<Boolean> getBoolean(final String key, final Long cacheTime) {
-        return Observable.create(new Observable.OnSubscribe<Boolean>() {
+
+        return Observable.defer(new Func0<Observable<Boolean>>() {
             @Override
-            public void call(Subscriber<? super Boolean> subscriber) {
+            public Observable<Boolean> call() {
                 try {
-                    subscriber.onNext(getBooleanValue(key, cacheTime));
-                    subscriber.onCompleted();
+                    return Observable.just(getBooleanValue(key, cacheTime));
                 } catch (Exception e) {
-                    subscriber.onError(e);
+                    return Observable.error(e);
                 }
             }
         });
     }
 
     public Observable<Boolean> setBoolean(final String key, final Boolean value) {
-        return Observable.create(new Observable.OnSubscribe<Boolean>() {
+
+        return Observable.defer(new Func0<Observable<Boolean>>() {
             @Override
-            public void call(Subscriber<? super Boolean> subscriber) {
+            public Observable<Boolean> call() {
                 try {
                     setValue(key, value);
-                    subscriber.onNext(value);
-                    subscriber.onCompleted();
+                    return Observable.just(value);
                 } catch (Exception e) {
-                    subscriber.onError(e);
+                    return Observable.error(e);
                 }
             }
         });
@@ -58,44 +58,41 @@ public final class RxSnappyClient extends BaseSnappyClient {
     }
 
     public Observable<String> getString(final String key, final Long cacheTime) {
-        return Observable.create(new Observable.OnSubscribe<String>() {
+        return Observable.defer(new Func0<Observable<String>>() {
             @Override
-            public void call(Subscriber<? super String> subscriber) {
+            public Observable<String> call() {
                 try {
-                    subscriber.onNext(getStringValue(key, cacheTime));
-                    subscriber.onCompleted();
+                    return Observable.just(getStringValue(key, cacheTime));
                 } catch (Exception e) {
-                    subscriber.onError(e);
+                    return Observable.error(e);
                 }
             }
         });
     }
 
     public Observable<String> setString(final String key, final String value) {
-        return Observable.create(new Observable.OnSubscribe<String>() {
+        return Observable.defer(new Func0<Observable<String>>() {
             @Override
-            public void call(Subscriber<? super String> subscriber) {
+            public Observable<String> call() {
                 try {
                     setValue(key, value);
-                    subscriber.onNext(value);
-                    subscriber.onCompleted();
+                    return Observable.just(value);
                 } catch (Exception e) {
-                    subscriber.onError(e);
+                    return Observable.error(e);
                 }
             }
         });
     }
 
     public Observable<Long> setLong(final String key, final Long value) {
-        return Observable.create(new Observable.OnSubscribe<Long>() {
+        return Observable.defer(new Func0<Observable<Long>>() {
             @Override
-            public void call(Subscriber<? super Long> subscriber) {
+            public Observable<Long> call() {
                 try {
                     setValue(key, value);
-                    subscriber.onNext(value);
-                    subscriber.onCompleted();
+                    return Observable.just(value);
                 } catch (Exception e) {
-                    subscriber.onError(e);
+                    return Observable.error(e);
                 }
             }
         });
@@ -106,14 +103,13 @@ public final class RxSnappyClient extends BaseSnappyClient {
     }
 
     public Observable<Long> getLong(final String key, final Long cacheTime) {
-        return Observable.create(new Observable.OnSubscribe<Long>() {
+        return Observable.defer(new Func0<Observable<Long>>() {
             @Override
-            public void call(Subscriber<? super Long> subscriber) {
+            public Observable<Long> call() {
                 try {
-                    subscriber.onNext(getLongValue(key, cacheTime));
-                    subscriber.onCompleted();
+                    return Observable.just(getLongValue(key, cacheTime));
                 } catch (Exception e) {
-                    subscriber.onError(e);
+                    return Observable.error(e);
                 }
             }
         });
@@ -121,16 +117,16 @@ public final class RxSnappyClient extends BaseSnappyClient {
 
 
     public Observable<Integer> setInteger(final String key, final Integer value) {
-        return Observable.create(new Observable.OnSubscribe<Integer>() {
+        return Observable.defer(new Func0<Observable<Integer>>() {
             @Override
-            public void call(Subscriber<? super Integer> subscriber) {
+            public Observable<Integer> call() {
                 try {
                     setValue(key, value);
-                    subscriber.onNext(value);
-                    subscriber.onCompleted();
+                    return Observable.just(value);
                 } catch (Exception e) {
-                    subscriber.onError(e);
+                    return Observable.error(e);
                 }
+
             }
         });
     }
@@ -140,14 +136,13 @@ public final class RxSnappyClient extends BaseSnappyClient {
     }
 
     public Observable<Integer> getInteger(final String key, final Long cacheTime) {
-        return Observable.create(new Observable.OnSubscribe<Integer>() {
+        return Observable.defer(new Func0<Observable<Integer>>() {
             @Override
-            public void call(Subscriber<? super Integer> subscriber) {
+            public Observable<Integer> call() {
                 try {
-                    subscriber.onNext(getIntegerValue(key, cacheTime));
-                    subscriber.onCompleted();
+                    return Observable.just(getIntegerValue(key, cacheTime));
                 } catch (Exception e) {
-                    subscriber.onError(e);
+                    return Observable.error(e);
                 }
             }
         });
@@ -155,15 +150,14 @@ public final class RxSnappyClient extends BaseSnappyClient {
 
 
     public Observable<List<String>> setStringList(final String key, final List<String> value) {
-        return Observable.create(new Observable.OnSubscribe<List<String>>() {
+        return Observable.defer(new Func0<Observable<List<String>>>() {
             @Override
-            public void call(Subscriber<? super List<String>> subscriber) {
+            public Observable<List<String>> call() {
                 try {
                     setStringListValue(key, value);
-                    subscriber.onNext(value);
-                    subscriber.onCompleted();
+                    return Observable.just(value);
                 } catch (Exception e) {
-                    subscriber.onError(e);
+                    return Observable.error(e);
                 }
             }
         });
@@ -175,29 +169,27 @@ public final class RxSnappyClient extends BaseSnappyClient {
     }
 
     public Observable<List<String>> getStringList(final String key, final Long cacheTime) {
-        return Observable.create(new Observable.OnSubscribe<List<String>>() {
+        return Observable.defer(new Func0<Observable<List<String>>>() {
             @Override
-            public void call(Subscriber<? super List<String>> subscriber) {
+            public Observable<List<String>> call() {
                 try {
-                    subscriber.onNext(getStringListValue(key, cacheTime));
-                    subscriber.onCompleted();
+                    return Observable.just(getStringListValue(key, cacheTime));
                 } catch (Exception e) {
-                    subscriber.onError(e);
+                    return Observable.error(e);
                 }
             }
         });
     }
 
     public Observable<List> setList(final String key, final List value) {
-        return Observable.create(new Observable.OnSubscribe<List>() {
+        return Observable.defer(new Func0<Observable<List>>() {
             @Override
-            public void call(Subscriber<? super List> subscriber) {
+            public Observable<List> call() {
                 try {
                     setValue(key, value);
-                    subscriber.onNext(value);
-                    subscriber.onCompleted();
+                    return Observable.just(value);
                 } catch (Exception e) {
-                    subscriber.onError(e);
+                    return Observable.error(e);
                 }
             }
         });
@@ -208,14 +200,13 @@ public final class RxSnappyClient extends BaseSnappyClient {
     }
 
     public <T> Observable<List<T>> getList(final String key, final Long cacheTime, final Class<T> selectedClass) {
-        return Observable.create(new Observable.OnSubscribe<List<T>>() {
+        return Observable.defer(new Func0<Observable<List<T>>>() {
             @Override
-            public void call(Subscriber<? super List<T>> subscriber) {
+            public Observable<List<T>> call() {
                 try {
-                    subscriber.onNext(getObjectList(key, cacheTime, selectedClass));
-                    subscriber.onCompleted();
+                    return Observable.just(getObjectList(key, cacheTime, selectedClass));
                 } catch (Exception e) {
-                    subscriber.onError(e);
+                    return Observable.error(e);
                 }
             }
         });
@@ -223,15 +214,14 @@ public final class RxSnappyClient extends BaseSnappyClient {
 
 
     public <T> Observable<T> setObject(final String key, final T value) {
-        return Observable.create(new Observable.OnSubscribe<T>() {
+        return Observable.defer(new Func0<Observable<T>>() {
             @Override
-            public void call(Subscriber<? super T> subscriber) {
+            public Observable<T> call() {
                 try {
                     setValue(key, value);
-                    subscriber.onNext(value);
-                    subscriber.onCompleted();
+                    return Observable.just(value);
                 } catch (Exception e) {
-                    subscriber.onError(e);
+                    return Observable.error(e);
                 }
             }
         });
@@ -242,14 +232,13 @@ public final class RxSnappyClient extends BaseSnappyClient {
     }
 
     public <T> Observable<T> getObject(final String key, final Long cacheTime, final Class<T> selectedClass) {
-        return Observable.create(new Observable.OnSubscribe<T>() {
+        return Observable.defer(new Func0<Observable<T>>() {
             @Override
-            public void call(Subscriber<? super T> subscriber) {
+            public Observable<T> call() {
                 try {
-                    subscriber.onNext(getObjectValue(key, cacheTime, selectedClass));
-                    subscriber.onCompleted();
+                    return Observable.just(getObjectValue(key, cacheTime, selectedClass));
                 } catch (Exception e) {
-                    subscriber.onError(e);
+                    return Observable.error(e);
                 }
             }
         });

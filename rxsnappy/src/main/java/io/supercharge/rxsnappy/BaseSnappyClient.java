@@ -5,7 +5,6 @@ import com.snappydb.SnappydbException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import io.supercharge.rxsnappy.exception.CacheExpiredException;
@@ -37,9 +36,7 @@ public abstract class BaseSnappyClient {
         } else {
 
             String[] splitted = key.split(":");
-            Date cacheDate = new Date(Long.valueOf(splitted[1]));
-            Date current = new Date();
-            long diff = current.getTime() - cacheDate.getTime();
+            long diff = System.currentTimeMillis() - Long.valueOf(splitted[1]);
 
             if (diff <= cacheTime) {
                 return true;
@@ -50,11 +47,10 @@ public abstract class BaseSnappyClient {
     }
 
     private String generateKey(String key) {
-        Date date = new Date();
         StringBuilder sb = new StringBuilder();
         sb.append(key);
         sb.append(":");
-        sb.append(date.getTime());
+        sb.append(System.currentTimeMillis());
 
         String res = sb.toString();
         return res;
@@ -72,16 +68,7 @@ public abstract class BaseSnappyClient {
     private String findTimeBasedKey(String key) throws SnappydbException {
         synchronized (db) {
             String[] s = db.findKeys(key);
-
-            String res = s[0];
-            String dateLog = "";
-            if (RxSnappyLog.debug) {
-                String[] tmp = res.split(":");
-                Date date = new Date(Long.valueOf(tmp[1]));
-                dateLog = RxSnappyUtils.printDateFromLong(date.getTime());
-            }
-            RxSnappyLog.d("Key found: " + res + " " + dateLog);
-            return res;
+            return s[0];
         }
     }
 

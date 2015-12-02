@@ -38,13 +38,14 @@ public class RxSnappyUtils {
 
     public static String generateKey(Object... objects) {
 
-        StringBuilder stringBuilder = new StringBuilder();
-
         Object[] args = objects;
 
         if (args == null) {
             throw new NullPointerException("Cannot generate key with no params!");
         }
+
+        StringBuilder stringBuilder = new StringBuilder();
+
 
         for (Object o : args) {
             if (o != null) {
@@ -59,10 +60,7 @@ public class RxSnappyUtils {
             }
         }
 
-        String result = stringBuilder.toString();
-        RxSnappyLog.d("Key generated from objects: " + result);
-
-        return Base64.encodeToString(result.getBytes(), Base64.DEFAULT);
+        return Base64.encodeToString(stringBuilder.toString().getBytes(), Base64.DEFAULT);
     }
 
 
