@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/team-supercharge/rxsnappy.svg?branch=master)](https://travis-ci.org/team-supercharge/rxsnappy)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-RxSnappy-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2864)
 
 #RxSnappy
 
