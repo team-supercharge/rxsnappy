@@ -88,16 +88,7 @@ public abstract class BaseSnappyClient {
     protected boolean isInCache(String key, Long cacheTime) throws SnappydbException {
         synchronized (db) {
             String[] keys = db.findKeys(key);
-
-            if (keys.length > 0) {
-                if (checkIsCacheValid(keys[0], cacheTime)) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
+            return (keys.length > 0) && (checkIsCacheValid(keys[0], cacheTime));
         }
     }
 
