@@ -421,6 +421,23 @@ public class BasicOperationTest extends AndroidTestCase {
         assertEquals(true, isExceptionThrown);
     }
 
+    @SmallTest
+    public void testRemoveCache() {
+        String key = "asdasd";
+
+        rxSnappyClient.setObject(key, "asd").toBlocking().first();
+
+        int cnt = rxSnappyClient.countKeys(key).toBlocking().first();
+        assertTrue(cnt == 1);
+
+        rxSnappyClient.deleteCache(key).toBlocking().first();
+
+        String[] cnt1 = rxSnappyClient.findKeys(key).toBlocking().first();
+
+        assertTrue(cnt1.length == 0);
+
+    }
+
 
     @Override
     protected void tearDown() throws Exception {

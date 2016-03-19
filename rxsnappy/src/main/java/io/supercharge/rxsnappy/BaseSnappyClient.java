@@ -56,12 +56,37 @@ public abstract class BaseSnappyClient {
         return res;
     }
 
+
+    protected void removeCacheForKey(String key) throws SnappydbException {
+        synchronized (db) {
+            if (db.countKeys(key) > 0) {
+                String[] keys = fndKeys(key);
+                for (String s : keys) {
+                    db.del(s);
+                }
+            }
+
+        }
+    }
+
     private void removePreviousCachedElement(String key) throws SnappydbException {
         synchronized (db) {
             if (db.countKeys(key) > 1) {
                 String[] s = db.findKeys(key);
                 db.del(s[0]);
             }
+        }
+    }
+
+    protected String[] fndKeys(String key) throws SnappydbException {
+        synchronized (db) {
+            return db.findKeys(key);
+        }
+    }
+
+    protected Integer cntKeys(String key) throws SnappydbException {
+        synchronized (db) {
+            return db.countKeys(key);
         }
     }
 

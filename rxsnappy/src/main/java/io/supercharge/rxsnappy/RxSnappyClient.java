@@ -244,4 +244,45 @@ public final class RxSnappyClient extends BaseSnappyClient {
         });
     }
 
+    public Observable<Boolean> deleteCache(final String key) {
+        return Observable.defer(new Func0<Observable<Boolean>>() {
+            @Override
+            public Observable<Boolean> call() {
+                try {
+                    removeCacheForKey(key);
+                    return Observable.just(true);
+                } catch (Exception e) {
+                    return Observable.error(e);
+                }
+            }
+        });
+    }
+
+    public Observable<String[]> findKeys(final String key) {
+        return Observable.defer(new Func0<Observable<String[]>>() {
+            @Override
+            public Observable<String[]> call() {
+                try {
+                    return Observable.just(fndKeys(key));
+                } catch (Exception e) {
+                    return Observable.error(e);
+                }
+            }
+        });
+    }
+
+    public Observable<Integer> countKeys(final String key) {
+        return Observable.defer(new Func0<Observable<Integer>>() {
+            @Override
+            public Observable<Integer> call() {
+                try {
+                    return Observable.just(cntKeys(key));
+                } catch (Exception e) {
+                    return Observable.error(e);
+                }
+
+            }
+        });
+    }
+
 }
