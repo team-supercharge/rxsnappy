@@ -422,10 +422,16 @@ public class BasicOperationTest extends AndroidTestCase {
     }
 
     @SmallTest
-    public void testRemoveCache() {
+    public void testCountFindExistsRemoveCache() {
         String key = "asdasd";
 
         rxSnappyClient.setObject(key, "asd").toBlocking().first();
+
+        boolean exists = rxSnappyClient.isCached(key).toBlocking().first();
+        boolean notexists = rxSnappyClient.isCached("testnot").toBlocking().first();
+
+        assertTrue(exists);
+        assertFalse(notexists);
 
         int cnt = rxSnappyClient.countKeys(key).toBlocking().first();
         assertTrue(cnt == 1);

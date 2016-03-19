@@ -36,6 +36,16 @@ public class RxSnappyUtils {
         }
     }
 
+    public static String generateKey(String key, int position) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(key);
+        sb.append(":");
+        sb.append(position);
+
+        return sb.toString();
+    }
+
     public static String generateKey(Object... objects) {
 
         Object[] args = objects;
