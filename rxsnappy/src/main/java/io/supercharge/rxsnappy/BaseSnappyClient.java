@@ -56,6 +56,19 @@ public abstract class BaseSnappyClient {
         return res;
     }
 
+
+    protected void removeCacheForKey(String key) throws SnappydbException {
+        synchronized (db) {
+            if (db.countKeys(key) > 0) {
+                String[] keys = fndKeys(key);
+                for (String s : keys) {
+                    db.del(s);
+                }
+            }
+
+        }
+    }
+
     private void removePreviousCachedElement(String key) throws SnappydbException {
         synchronized (db) {
             if (db.countKeys(key) > 1) {
@@ -65,10 +78,35 @@ public abstract class BaseSnappyClient {
         }
     }
 
+    protected String[] fndKeys(String key) throws SnappydbException {
+        synchronized (db) {
+            return db.findKeys(key);
+        }
+    }
+
+    protected Integer cntKeys(String key) throws SnappydbException {
+        synchronized (db) {
+            return db.countKeys(key);
+        }
+    }
+
     private String findTimeBasedKey(String key) throws SnappydbException {
         synchronized (db) {
-            String[] s = db.findKeys(key);
+            String[] s = db.findKeys(key, 0);
             return s[0];
+        }
+    }
+
+    public boolean isInCache(String key) throws SnappydbException {
+        synchronized (db) {
+            String[] keys = db.findKeys(key, 0);
+            return (keys.length > 0);
+        }
+    }
+
+    public boolean exsts(String key) throws SnappydbException {
+        synchronized (db) {
+            return db.exists(key);
         }
     }
 
@@ -79,7 +117,7 @@ public abstract class BaseSnappyClient {
         }
     }
 
-    protected void setValue(String key, Boolean value) throws SnappydbException, RxSnappyException {
+    protected void setValue(String key, Boolean value, boolean ignoreCache) throws SnappydbException, RxSnappyException {
         synchronized (db) {
             if (key == null) {
                 throw new KeyIsNullException();
@@ -89,9 +127,12 @@ public abstract class BaseSnappyClient {
                 throw new ValueIsNullException();
             }
 
-            db.put(generateKey(key), value);
-
-            removePreviousCachedElement(key);
+            if (!ignoreCache) {
+                db.put(generateKey(key), value);
+                removePreviousCachedElement(key);
+            } else {
+                db.put(key, value);
+            }
         }
     }
 
@@ -108,7 +149,7 @@ public abstract class BaseSnappyClient {
         }
     }
 
-    protected void setValue(String key, Integer value) throws SnappydbException, RxSnappyException {
+    protected void setValue(String key, Integer value, boolean ignoreCache) throws SnappydbException, RxSnappyException {
         synchronized (db) {
             if (key == null) {
                 throw new KeyIsNullException();
@@ -116,9 +157,14 @@ public abstract class BaseSnappyClient {
             if (value == null) {
                 throw new ValueIsNullException();
             }
-            db.put(generateKey(key), value);
+            if (!ignoreCache) {
+                db.put(generateKey(key), value);
+                removePreviousCachedElement(key);
+            } else {
+                db.put(key, value);
+            }
 
-            removePreviousCachedElement(key);
+
         }
     }
 
@@ -135,7 +181,7 @@ public abstract class BaseSnappyClient {
         }
     }
 
-    protected void setValue(String key, Long value) throws SnappydbException, RxSnappyException {
+    protected void setValue(String key, Long value, boolean ignoreCache) throws SnappydbException, RxSnappyException {
         synchronized (db) {
             if (key == null) {
                 throw new KeyIsNullException();
@@ -143,8 +189,12 @@ public abstract class BaseSnappyClient {
             if (value == null) {
                 throw new ValueIsNullException();
             }
-            db.put(generateKey(key), value);
-            removePreviousCachedElement(key);
+            if (!ignoreCache) {
+                db.put(generateKey(key), value);
+                removePreviousCachedElement(key);
+            } else {
+                db.put(key, value);
+            }
         }
     }
 
@@ -162,7 +212,7 @@ public abstract class BaseSnappyClient {
     }
 
 
-    protected void setValue(String key, String value) throws SnappydbException, RxSnappyException {
+    protected void setValue(String key, String value, boolean ignoreCache) throws SnappydbException, RxSnappyException {
         synchronized (db) {
             if (key == null) {
                 throw new KeyIsNullException();
@@ -170,9 +220,12 @@ public abstract class BaseSnappyClient {
             if (value == null) {
                 throw new ValueIsNullException();
             }
-            db.put(generateKey(key), value);
-
-            removePreviousCachedElement(key);
+            if (!ignoreCache) {
+                db.put(generateKey(key), value);
+                removePreviousCachedElement(key);
+            } else {
+                db.put(key, value);
+            }
         }
     }
 
@@ -189,7 +242,7 @@ public abstract class BaseSnappyClient {
         }
     }
 
-    protected void setStringListValue(String key, List<String> value) throws SnappydbException, RxSnappyException {
+    protected void setStringListValue(String key, List<String> value, boolean ignoreCache) throws SnappydbException, RxSnappyException {
         synchronized (db) {
             if (key == null) {
                 throw new KeyIsNullException();
@@ -197,9 +250,13 @@ public abstract class BaseSnappyClient {
             if (value == null) {
                 throw new ValueIsNullException();
             }
-            db.put(generateKey(key), value.toArray(new String[value.size()]));
 
-            removePreviousCachedElement(key);
+            if (!ignoreCache) {
+                db.put(generateKey(key), value.toArray(new String[value.size()]));
+                removePreviousCachedElement(key);
+            } else {
+                db.put(key, value.toArray(new String[value.size()]));
+            }
         }
     }
 
@@ -235,7 +292,7 @@ public abstract class BaseSnappyClient {
         }
     }
 
-    protected void setValue(String key, List object) throws SnappydbException, RxSnappyException {
+    protected void setValue(String key, List object, boolean ignoreCache) throws SnappydbException, RxSnappyException {
         synchronized (db) {
             if (key == null) {
                 throw new KeyIsNullException();
@@ -243,13 +300,17 @@ public abstract class BaseSnappyClient {
             if (object == null) {
                 throw new ValueIsNullException();
             }
-            db.put(generateKey(key), object.toArray());
 
-            removePreviousCachedElement(key);
+            if (!ignoreCache) {
+                db.put(generateKey(key), object.toArray());
+                removePreviousCachedElement(key);
+            } else {
+                db.put(key, object.toArray());
+            }
         }
     }
 
-    protected <T> T setValue(String key, T o) throws SnappydbException, RxSnappyException {
+    protected <T> T setValue(String key, T o, boolean ignoreCache) throws SnappydbException, RxSnappyException {
         synchronized (db) {
             if (key == null) {
                 throw new KeyIsNullException();
@@ -257,9 +318,13 @@ public abstract class BaseSnappyClient {
             if (o == null) {
                 throw new ValueIsNullException();
             }
-            db.put(generateKey(key), o);
 
-            removePreviousCachedElement(key);
+            if (!ignoreCache) {
+                db.put(generateKey(key), o);
+                removePreviousCachedElement(key);
+            } else {
+                db.put(key, o);
+            }
 
             return o;
         }
@@ -277,6 +342,5 @@ public abstract class BaseSnappyClient {
             }
         }
     }
-
 
 }

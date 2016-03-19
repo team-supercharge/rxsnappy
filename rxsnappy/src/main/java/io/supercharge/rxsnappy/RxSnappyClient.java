@@ -20,6 +20,33 @@ public final class RxSnappyClient extends BaseSnappyClient {
         super(RxSnappy.db);
     }
 
+
+    public Observable<Boolean> isCached(final String key) {
+        return Observable.defer(new Func0<Observable<Boolean>>() {
+            @Override
+            public Observable<Boolean> call() {
+                try {
+                    return Observable.just(isInCache(key));
+                } catch (Exception e) {
+                    return Observable.error(e);
+                }
+            }
+        });
+    }
+
+    public Observable<Boolean> exists(final String key) {
+        return Observable.defer(new Func0<Observable<Boolean>>() {
+            @Override
+            public Observable<Boolean> call() {
+                try {
+                    return Observable.just(exsts(key));
+                } catch (Exception e) {
+                    return Observable.error(e);
+                }
+            }
+        });
+    }
+
     public Observable<Boolean> getBoolean(String key) {
         return getBoolean(key, null);
     }
@@ -38,13 +65,18 @@ public final class RxSnappyClient extends BaseSnappyClient {
         });
     }
 
-    public Observable<Boolean> setBoolean(final String key, final Boolean value) {
+    public Observable<Boolean> setBoolean(String key, Boolean value) {
+        return setBoolean(key, value, false);
+    }
+
+
+    public Observable<Boolean> setBoolean(final String key, final Boolean value, final boolean ignoreCache) {
 
         return Observable.defer(new Func0<Observable<Boolean>>() {
             @Override
             public Observable<Boolean> call() {
                 try {
-                    setValue(key, value);
+                    setValue(key, value, ignoreCache);
                     return Observable.just(value);
                 } catch (Exception e) {
                     return Observable.error(e);
@@ -75,7 +107,7 @@ public final class RxSnappyClient extends BaseSnappyClient {
             @Override
             public Observable<String> call() {
                 try {
-                    setValue(key, value);
+                    setValue(key, value, false);
                     return Observable.just(value);
                 } catch (Exception e) {
                     return Observable.error(e);
@@ -85,11 +117,15 @@ public final class RxSnappyClient extends BaseSnappyClient {
     }
 
     public Observable<Long> setLong(final String key, final Long value) {
+        return setLong(key, value, false);
+    }
+
+    public Observable<Long> setLong(final String key, final Long value, final boolean ignoreCache) {
         return Observable.defer(new Func0<Observable<Long>>() {
             @Override
             public Observable<Long> call() {
                 try {
-                    setValue(key, value);
+                    setValue(key, value, ignoreCache);
                     return Observable.just(value);
                 } catch (Exception e) {
                     return Observable.error(e);
@@ -117,11 +153,15 @@ public final class RxSnappyClient extends BaseSnappyClient {
 
 
     public Observable<Integer> setInteger(final String key, final Integer value) {
+        return setInteger(key, value, false);
+    }
+
+    public Observable<Integer> setInteger(final String key, final Integer value, final boolean ignoreCache) {
         return Observable.defer(new Func0<Observable<Integer>>() {
             @Override
             public Observable<Integer> call() {
                 try {
-                    setValue(key, value);
+                    setValue(key, value, ignoreCache);
                     return Observable.just(value);
                 } catch (Exception e) {
                     return Observable.error(e);
@@ -148,13 +188,16 @@ public final class RxSnappyClient extends BaseSnappyClient {
         });
     }
 
-
     public Observable<List<String>> setStringList(final String key, final List<String> value) {
+        return setStringList(key, value, false);
+    }
+
+    public Observable<List<String>> setStringList(final String key, final List<String> value, final boolean ignoreCache) {
         return Observable.defer(new Func0<Observable<List<String>>>() {
             @Override
             public Observable<List<String>> call() {
                 try {
-                    setStringListValue(key, value);
+                    setStringListValue(key, value, ignoreCache);
                     return Observable.just(value);
                 } catch (Exception e) {
                     return Observable.error(e);
@@ -182,11 +225,15 @@ public final class RxSnappyClient extends BaseSnappyClient {
     }
 
     public Observable<List> setList(final String key, final List value) {
+        return setList(key, value, false);
+    }
+
+    public Observable<List> setList(final String key, final List value, final boolean ignoreCache) {
         return Observable.defer(new Func0<Observable<List>>() {
             @Override
             public Observable<List> call() {
                 try {
-                    setValue(key, value);
+                    setValue(key, value, ignoreCache);
                     return Observable.just(value);
                 } catch (Exception e) {
                     return Observable.error(e);
@@ -212,13 +259,16 @@ public final class RxSnappyClient extends BaseSnappyClient {
         });
     }
 
-
     public <T> Observable<T> setObject(final String key, final T value) {
+        return setObject(key, value, false);
+    }
+
+    public <T> Observable<T> setObject(final String key, final T value, final boolean ignoreCache) {
         return Observable.defer(new Func0<Observable<T>>() {
             @Override
             public Observable<T> call() {
                 try {
-                    setValue(key, value);
+                    setValue(key, value, ignoreCache);
                     return Observable.just(value);
                 } catch (Exception e) {
                     return Observable.error(e);
@@ -240,6 +290,47 @@ public final class RxSnappyClient extends BaseSnappyClient {
                 } catch (Exception e) {
                     return Observable.error(e);
                 }
+            }
+        });
+    }
+
+    public Observable<Boolean> deleteCache(final String key) {
+        return Observable.defer(new Func0<Observable<Boolean>>() {
+            @Override
+            public Observable<Boolean> call() {
+                try {
+                    removeCacheForKey(key);
+                    return Observable.just(true);
+                } catch (Exception e) {
+                    return Observable.error(e);
+                }
+            }
+        });
+    }
+
+    public Observable<String[]> findKeys(final String key) {
+        return Observable.defer(new Func0<Observable<String[]>>() {
+            @Override
+            public Observable<String[]> call() {
+                try {
+                    return Observable.just(fndKeys(key));
+                } catch (Exception e) {
+                    return Observable.error(e);
+                }
+            }
+        });
+    }
+
+    public Observable<Integer> countKeys(final String key) {
+        return Observable.defer(new Func0<Observable<Integer>>() {
+            @Override
+            public Observable<Integer> call() {
+                try {
+                    return Observable.just(cntKeys(key));
+                } catch (Exception e) {
+                    return Observable.error(e);
+                }
+
             }
         });
     }
