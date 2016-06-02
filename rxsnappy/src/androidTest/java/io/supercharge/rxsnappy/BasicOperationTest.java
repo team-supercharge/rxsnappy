@@ -3,6 +3,8 @@ package io.supercharge.rxsnappy;
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 
+import com.snappydb.SnappydbException;
+
 import java.util.List;
 
 import io.supercharge.mock.DataGenerator;
@@ -26,6 +28,30 @@ public class BasicOperationTest extends AndroidTestCase {
         RxSnappy.init(getContext());
         rxSnappyClient = new RxSnappyClient();
     }
+
+    @SmallTest
+    public void testResetDatabase() throws SnappydbException {
+        String key = "asd";
+
+        DummyData dummyData = DataGenerator.generateNewDummyData();
+
+        rxSnappyClient.setObject(key, dummyData)
+                .toBlocking().first();
+
+
+        String[] keys = rxSnappyClient.db.findKeys(key);
+
+        assertEquals(1, keys.length);
+
+
+        RxSnappy.resetDatabase(getContext());
+
+        keys = rxSnappyClient.db.findKeys(key);
+
+        assertEquals(0, keys.length);
+
+    }
+
 
     @SmallTest
     public void testBooleanValue() throws Exception {

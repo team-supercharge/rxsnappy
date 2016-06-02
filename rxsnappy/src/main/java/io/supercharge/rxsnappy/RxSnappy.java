@@ -48,4 +48,21 @@ public final class RxSnappy {
             }
         }
     }
+
+    public static void resetDatabase(Context context) {
+        if (db != null) {
+            try {
+                db.destroy();
+                db = null;
+
+                init(context);
+
+            } catch (SnappydbException e) {
+                Log.e("RxSnappy", "Failed to destroy database", e);
+            }
+        } else {
+            Log.d("RxSnappy", "Database is null. Nothing to do.");
+        }
+    }
+
 }
