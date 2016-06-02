@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 0.4.0 *(2016-06-02)*
+----------------------------
+
+* Add resetdatabase method, to be able to clear the database
+
+
 Version 0.3.0 *(2016-03-20)*
 ----------------------------
 
