@@ -1,16 +1,21 @@
 package io.supercharge.rxsnappy;
 
+import android.os.CountDownTimer;
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
+import android.util.Log;
 
 import com.snappydb.SnappydbException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.supercharge.mock.DataGenerator;
 import io.supercharge.mock.DummyData;
 import io.supercharge.mock.MockedResponse;
 import io.supercharge.rxsnappy.exception.RxSnappyException;
+import rx.functions.Action1;
 
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
@@ -52,6 +57,45 @@ public class BasicOperationTest extends AndroidTestCase {
 
     }
 
+
+    @SmallTest
+    public void testHashMap(){
+        final String key_test_hash = "hash me up23";
+        HashMap<Object , Object>  hash =  new HashMap<>();
+        hash.put("key", "value");
+        rxSnappyClient.setHashMapList(key_test_hash ,hash).subscribe(new Action1<HashMap<Object, Object>>() {
+            @Override
+            public void call(HashMap<Object, Object> objectObjectHashMap) {
+                Log.d("check the hash" , "key is cache up!");
+            }
+        });
+
+    new CountDownTimer(1000 , 1000){
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+        }
+
+        @Override
+        public void onFinish() {
+            rxSnappyClient.getHashMapList(key_test_hash, (long) 100000).subscribe(new Action1<HashMap<Object, Object>>() {
+                @Override
+                public void call(HashMap<Object, Object> objectObjectHashMap) {
+                    for (Map.Entry<Object, Object> entry : objectObjectHashMap.entrySet()) {
+                        Object key = entry.getKey();
+                        Object value = entry.getValue();
+                        Log.d("check the hash" , "key = "+ key.toString() + " value =" + value.toString());
+
+                    }
+                }
+            });
+        }
+    }.start();
+
+
+
+    }
 
     @SmallTest
     public void testBooleanValue() throws Exception {

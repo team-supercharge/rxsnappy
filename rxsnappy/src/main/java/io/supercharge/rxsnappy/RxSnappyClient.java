@@ -2,6 +2,7 @@ package io.supercharge.rxsnappy;
 
 import com.snappydb.DB;
 
+import java.util.HashMap;
 import java.util.List;
 
 import rx.Observable;
@@ -39,7 +40,7 @@ public final class RxSnappyClient extends BaseSnappyClient {
             @Override
             public Observable<Boolean> call() {
                 try {
-                    return Observable.just(exsts(key));
+                    return Observable.just(isExists(key));
                 } catch (Exception e) {
                     return Observable.error(e);
                 }
@@ -224,6 +225,39 @@ public final class RxSnappyClient extends BaseSnappyClient {
         });
     }
 
+
+    public Observable<HashMap<Object , Object>> setHashMapList(final String key, final HashMap<Object , Object> value) {
+        return Observable.defer(new Func0<Observable<HashMap<Object , Object>>>() {
+            @Override
+            public Observable<HashMap<Object , Object>> call() {
+                try {
+                    setHashMap(key, value , false);
+                    return Observable.just(value);
+                } catch (Exception e) {
+                    return Observable.error(e);
+                }
+            }
+        });
+    }
+
+    public Observable<HashMap<Object , Object>> getHashMapList(final String key, final Long cacheTime) {
+        return Observable.defer(new Func0<Observable<HashMap<Object , Object>>>() {
+            @Override
+            public Observable<HashMap<Object , Object>> call() {
+                try {
+                    return Observable.just(getHashMap(key, cacheTime));
+                } catch (Exception e) {
+                    return Observable.error(e);
+                }
+            }
+        });
+    }
+
+
+
+
+
+
     public Observable<List> setList(final String key, final List value) {
         return setList(key, value, false);
     }
@@ -276,6 +310,8 @@ public final class RxSnappyClient extends BaseSnappyClient {
             }
         });
     }
+
+
 
     public <T> Observable<T> getObject(String key, Class<T> selectedClass) {
         return getObject(key, null, selectedClass);
