@@ -5,6 +5,7 @@ import com.snappydb.SnappydbException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import io.supercharge.rxsnappy.exception.CacheExpiredException;
@@ -12,6 +13,7 @@ import io.supercharge.rxsnappy.exception.KeyIsNullException;
 import io.supercharge.rxsnappy.exception.MissingDataException;
 import io.supercharge.rxsnappy.exception.RxSnappyException;
 import io.supercharge.rxsnappy.exception.ValueIsNullException;
+import io.supercharge.rxsnappy.objects.keyValue;
 
 /**
  * Created by richardradics on 25/11/15.
@@ -104,7 +106,7 @@ public abstract class BaseSnappyClient {
         }
     }
 
-    public boolean exsts(String key) throws SnappydbException {
+    public Boolean isExists(String key) throws SnappydbException {
         synchronized (db) {
             return db.exists(key);
         }
@@ -259,6 +261,47 @@ public abstract class BaseSnappyClient {
             }
         }
     }
+
+
+
+    protected void setHashMap(String key, HashMap<Object , Object>  value, boolean ignoreCache) throws SnappydbException, RxSnappyException {
+        synchronized (db) {
+            if (key == null) {
+                throw new KeyIsNullException();
+            }
+            if (value == null) {
+                throw new ValueIsNullException();
+            }
+
+
+            if (!ignoreCache) {
+                db.put(generateKey(key), value.entrySet().toArray());
+                removePreviousCachedElement(key);
+            } else {
+                db.put(key,  value.entrySet().toArray());
+            }
+        }
+    }
+
+
+    protected HashMap<Object , Object> getHashMap(String key, Long cacheTime) throws SnappydbException {
+        synchronized (db) {
+            if (key == null) {
+                throw new KeyIsNullException();
+            }
+            HashMap<Object , Object>  hash=  new HashMap<>();
+            if (isInCache(key, cacheTime)) {
+                keyValue[] array = db.getObjectArray(findTimeBasedKey(key), keyValue.class);
+                for(keyValue s : array)
+                    hash.put(s.getKey() , s.getKey());
+            } else {
+                throw new MissingDataException();
+            }
+            return hash;
+        }
+    }
+
+
 
 
     protected List<String> getStringListValue(String key, Long cacheTime) throws SnappydbException {
